@@ -4,6 +4,8 @@ window.addEventListener("load", (event) => {
     let temperatureDestription = document.querySelector('.temperature-destription');
     let temperatureDegree = document.querySelector('.temperature-degree');
     let locationTimezone = document.querySelector('.location-timezone');
+    let degreeSection = document.querySelector('.temperature');
+    const degreeSpan = document.querySelector('.temperature span');
 
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
@@ -24,8 +26,21 @@ window.addEventListener("load", (event) => {
                     temperatureDegree.textContent = temperature;
                     temperatureDestription.textContent = summary;
                     locationTimezone.textContent = data.timezone;
-                    
+                    // Celsius convert
+                    let celsius = (temperature - 32) * (5 / 9);
+                    // Set Icon
                     setIcons(icon, document.querySelector('.icon'));
+
+                    // Convert Farenheit to Celsius
+                    degreeSection.addEventListener('click', () => {
+                        if(degreeSpan.textContent === "F"){
+                            degreeSpan.textContent = "C";
+                            temperatureDegree.textContent = Math.floor(celsius);
+                        }else{
+                            degreeSpan.textContent = "F";
+                            temperatureDegree.textContent = temperature;
+                        }
+                    });
 
                 });
 
